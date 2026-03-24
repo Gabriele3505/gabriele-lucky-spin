@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gabriele Lucky Spin</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-layer"></div>
+  <div class="bg-shine"></div>
+  <canvas id="fxCanvas"></canvas>
+
+  <section id="loginScreen" class="screen active">
+    <div class="login-card marquee-frame login-card-clean">
+      <h1 class="welcome-top neon-gold">Benvenuto in</h1>
+
+      <div class="login-logo-wrap big-logo-wrap">
+        <img
+          src="images/logo-slot.png"
+          alt="Gabriele Lucky Spin Logo"
+          class="main-logo login-logo-big"
+          onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='assets/images/logo-slot.png';}"
+        />
+      </div>
+
+      <p class="name-label">Inserisci il tuo nome</p>
+
+      <div class="login-box">
+        <input id="playerNameInput" type="text" maxlength="16" placeholder="Scrivi il tuo nome..." />
+        <div id="loginError" class="login-error"></div>
+        <button id="enterBtn" class="casino-btn primary-btn">Entra nella slot</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="gameScreen" class="screen">
+    <header class="top-header top-header-with-logo">
+      <div class="header-logo-box">
+        <img
+          src="images/logo-slot.png"
+          alt="Gabriele Lucky Spin Logo"
+          class="main-logo game-logo"
+          onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='assets/images/logo-slot.png';}"
+        />
+      </div>
+
+      <div class="header-title-box">
+        <h1 class="slot-logo neon-gold">Gabriele Lucky Spin</h1>
+        <div class="logo-underline"></div>
+      </div>
+    </header>
+
+    <main class="game-layout">
+      <section class="main-column">
+        <div class="info-bar panel">
+          <div class="info-card">
+            <span>Giocatore</span>
+            <strong id="playerNameLabel">-</strong>
+          </div>
+          <div class="info-card">
+            <span>Crediti</span>
+            <strong id="creditsLabel">5000</strong>
+          </div>
+          <div class="info-card">
+            <span>Puntata</span>
+            <strong id="betLabel">50</strong>
+          </div>
+          <div class="info-card">
+            <span>Free Spins</span>
+            <strong id="freeSpinsLabel">0</strong>
+          </div>
+        </div>
+
+        <div class="paytable-panel panel marquee-frame">
+          <div class="paytable-topbar">
+            <h2 class="paytable-title neon-gold-small">Tabella Premi</h2>
+            <button id="rulesBtn" class="casino-btn info-btn" type="button">INFO / REGOLE</button>
+          </div>
+
+          <div class="paytable-grid">
+            <div class="paytable-card">
+              <div class="pay-symbol">🍒</div>
+              <div class="pay-name">Ciliegie</div>
+              <div class="pay-values">2x = x1 · 3x = x4 · 4x = x12 · 5x = x30</div>
+            </div>
+
+            <div class="paytable-card">
+              <div class="pay-symbol">🍋</div>
+              <div class="pay-name">Limoni</div>
+              <div class="pay-values">2x = x1 · 3x = x5 · 4x = x15 · 5x = x35</div>
+            </div>
+
+            <div class="paytable-card">
+              <div class="pay-symbol">🟣</div>
+              <div class="pay-name">Prugne</div>
+              <div class="pay-values">2x = x2 · 3x = x6 · 4x = x18 · 5x = x45</div>
+            </div>
+
+            <div class="paytable-card">
+              <div class="pay-symbol">🔔</div>
+              <div class="pay-name">Campane</div>
+              <div class="pay-values">2x = x2 · 3x = x8 · 4x = x25 · 5x = x70</div>
+            </div>
+
+            <div class="paytable-card">
+              <div class="pay-symbol">BAR 3</div>
+              <div class="pay-name">BAR</div>
+              <div class="pay-values">2x = x3 · 3x = x10 · 4x = x35 · 5x = x100</div>
+            </div>
+
+            <div class="paytable-card">
+              <div class="pay-symbol">7</div>
+              <div class="pay-name">Sette</div>
+              <div class="pay-values">2x = x5 · 3x = x20 · 4x = x75 · 5x = x300</div>
+            </div>
+
+            <div class="paytable-card special-card">
+              <div class="pay-symbol">WILD</div>
+              <div class="pay-name">Wild</div>
+              <div class="pay-values">Sostituisce i simboli normali · 2x = x8 · 3x = x30 · 4x = x120 · 5x = x500</div>
+            </div>
+
+            <div class="paytable-card special-card">
+              <div class="pay-symbol">x4 WILD</div>
+              <div class="pay-name">Wild Moltiplicatore</div>
+              <div class="pay-values">Sostituisce i simboli normali · 1 x4 nella linea = premio x4 · 2 x4 = premio x8</div>
+            </div>
+
+            <div class="paytable-card bonus-card">
+              <div class="pay-symbol">SCATTER</div>
+              <div class="pay-name">Scatter</div>
+              <div class="pay-values">3 = x2 puntata + 8 free spins · 4 = x10 + 12 free spins · 5 = x50 + 20 free spins</div>
+            </div>
+
+            <div class="paytable-card bonus-card">
+              <div class="pay-symbol">💎</div>
+              <div class="pay-name">Jackpot Diamond</div>
+              <div class="pay-values">3 = x3 puntata · 4 = x10 · 5 = x25 · 6 = x60 · 7 = x150 · 8 = x400 · 9 = x1000 · 10+ = x2500</div>
+            </div>
+          </div>
+
+          <div class="paytable-note">
+            Le vincite normali si calcolano da sinistra verso destra sulle 20 linee attive. Scatter e Jackpot Diamond pagano ovunque nella griglia 5x3.
+          </div>
+        </div>
+
+        <div class="slot-cabinet marquee-frame">
+          <div class="cabinet-crown">
+            <div id="jackpotBanner" class="jackpot-banner neon-red">MEGA JACKPOT</div>
+          </div>
+
+          <div class="bulb-row top-bulbs">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+
+          <div class="cabinet-body">
+            <div class="machine-side-glow left"></div>
+            <div class="machine-side-glow right"></div>
+
+            <div class="window-shell">
+              <div class="window-top-reflection"></div>
+
+              <div class="payline-side left-side">
+                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+              </div>
+
+              <div class="slot-window-grid" id="slotGrid">
+                <div id="paylineOverlay" class="payline-overlay"></div>
+
+                <div class="reel-column" id="reel0">
+                  <div class="slot-cell" id="r0c0"></div>
+                  <div class="slot-cell" id="r0c1"></div>
+                  <div class="slot-cell" id="r0c2"></div>
+                </div>
+
+                <div class="reel-column" id="reel1">
+                  <div class="slot-cell" id="r1c0"></div>
+                  <div class="slot-cell" id="r1c1"></div>
+                  <div class="slot-cell" id="r1c2"></div>
+                </div>
+
+                <div class="reel-column" id="reel2">
+                  <div class="slot-cell" id="r2c0"></div>
+                  <div class="slot-cell" id="r2c1"></div>
+                  <div class="slot-cell" id="r2c2"></div>
+                </div>
+
+                <div class="reel-column" id="reel3">
+                  <div class="slot-cell" id="r3c0"></div>
+                  <div class="slot-cell" id="r3c1"></div>
+                  <div class="slot-cell" id="r3c2"></div>
+                </div>
+
+                <div class="reel-column" id="reel4">
+                  <div class="slot-cell" id="r4c0"></div>
+                  <div class="slot-cell" id="r4c1"></div>
+                  <div class="slot-cell" id="r4c2"></div>
+                </div>
+              </div>
+
+              <div class="payline-side right-side">
+                <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+                <span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
+              </div>
+            </div>
+
+            <div id="leverZone" class="lever-zone" title="Tira la leva">
+              <div id="leverStick" class="lever-stick"></div>
+              <div id="leverBall" class="lever-ball"></div>
+            </div>
+          </div>
+
+          <div class="message-wrap">
+            <div id="messageLabel" class="message-text">Premi SPIN per iniziare!</div>
+          </div>
+
+          <div class="controls">
+            <button id="minusBtn" class="casino-btn side-btn">−</button>
+            <button id="spinBtn" class="casino-btn spin-btn">SPIN</button>
+            <button id="plusBtn" class="casino-btn side-btn">+</button>
+          </div>
+
+          <div class="bottom-stats">
+            <div class="bottom-stat">
+              <span>Linee attive</span>
+              <strong>20</strong>
+            </div>
+            <div class="bottom-stat">
+              <span>Max win spin</span>
+              <strong>100000</strong>
+            </div>
+          </div>
+
+          <div class="bulb-row bottom-bulbs">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side-column">
+        <div class="board panel marquee-frame">
+          <h2 class="board-title neon-gold-small">Bacheca</h2>
+
+          <div class="board-section">
+            <h3>Partecipanti</h3>
+            <ul id="playersList"></ul>
+          </div>
+
+          <div class="board-section">
+            <h3>Chi ha vinto</h3>
+            <ul id="winnersList"></ul>
+          </div>
+
+          <div class="board-section">
+            <h3>Top vincite</h3>
+            <ul id="topWinsList"></ul>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </section>
+
+  <div id="rulesModal" class="rules-modal hidden">
+    <div class="rules-backdrop" id="rulesBackdrop"></div>
+
+    <div class="rules-dialog marquee-frame">
+      <div class="rules-header">
+        <h2 class="rules-title neon-gold-small">Info / Regole</h2>
+        <button id="closeRulesBtn" class="rules-close-btn" type="button">✕</button>
+      </div>
+
+      <div class="rules-content">
+        <div class="rules-block">
+          <h3>Struttura del gioco</h3>
+          <p>La slot è composta da 5 rulli e 3 righe visibili, per un totale di 15 celle. Le vincite normali vengono calcolate su 20 linee attive.</p>
+        </div>
+
+        <div class="rules-block">
+          <h3>Come si calcolano le vincite</h3>
+          <p>La puntata scelta con + e - è la puntata totale dello spin. Il gioco divide la puntata totale sulle 20 linee attive. Le combinazioni devono partire da sinistra verso destra.</p>
+        </div>
+
+        <div class="rules-block">
+          <h3>Simboli normali</h3>
+          <p>Ciliegie, limoni, prugne, campane, BAR e 7 pagano sulle linee vincenti. Più simboli uguali escono consecutivamente da sinistra, più alta sarà la vincita.</p>
+        </div>
+
+        <div class="rules-block">
+          <h3>Wild</h3>
+          <p>Il simbolo WILD sostituisce i simboli normali per aiutare a completare le combinazioni. Non sostituisce SCATTER né JACKPOT DIAMOND.</p>
+        </div>
+
+        <div class="rules-block">
+          <h3>x4 Wild</h3>
+          <p>Il simbolo x4 WILD sostituisce i simboli normali come un wild, ma moltiplica anche la vincita della linea: un x4 nella linea porta la vincita x4, due x4 nella stessa linea portano la vincita x8.</p>
+        </div>
+
+        <div class="rules-block">
+          <h3>Scatter</h3>
+          <p>Gli SCATTER pagano in qualsiasi posizione della griglia. Con 3 SCATTER vinci x2 la puntata totale e ottieni 8 free spins. Con 4 SCATTER vinci x10 e 12 free spins. Con 5 SCATTER vinci x50 e 20 free spins.</p>
+        </div>
+
+        <div class="rules-block">
+          <h3>Jackpot Diamond</h3>
+          <p>I diamanti jackpot pagano in qualsiasi posizione della griglia. Più diamanti escono sullo schermo, più grande sarà il premio: 3 = x3, 4 = x10, 5 = x25, 6 = x60, 7 = x150, 8 = x400, 9 = x1000, 10 o più = x2500 della puntata totale.</p>
+        </div>
+
+        <div class="rules-block">
+          <h3>Free Spins</h3>
+          <p>Durante i free spins non viene scalata la puntata dai crediti. Tutte le vincite dei free spins vengono aggiunte direttamente al saldo del giocatore.</p>
+        </div>
+
+        <div class="rules-block">
+          <h3>Massimo vincibile</h3>
+          <p>La vincita massima accreditabile in un singolo spin è di 100000 crediti.</p>
+        </div>
+
+        <div class="rules-block">
+          <h3>Bacheca e top vincite</h3>
+          <p>La bacheca mostra i partecipanti, i vincitori recenti e la classifica delle migliori vincite. Per ogni giocatore, nella top vincite resta solo il risultato migliore.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
